@@ -6,19 +6,14 @@ const modalBody = document.getElementById("modalBody");
 const closeModal = document.getElementById("closeModal");
 
 let ecologyData = {};
-let originalViewBox = "";
 
 /* SVG YÜKLE */
 fetch("country.svg")
   .then(r => r.text())
   .then(svg => {
     mapContainer.innerHTML = svg;
-
-    const svgEl = mapContainer.querySelector("svg");
-    originalViewBox = svgEl.getAttribute("viewBox");
-
     loadData();
-    bindMapClicks();
+    bindMap();
   });
 
 /* JSON */
@@ -27,52 +22,44 @@ function loadData() {
     .then(r => r.json())
     .then(data => {
       ecologyData = data;
-      fillSelectFromSVG();
+
+      Object.keys(ecologyData).forEach(id => {
+        const opt = document.createElement("option");
+        opt.value = id;
+        opt.textContent = ecologyData[id].city;
+        select.appendChild(opt);
+      });
+
       addLabels();
     });
 }
 
-/* SELECT DOLDUR (SVG'DEN) */
-function fillSelectFromSVG() {
-  document.querySelectorAll("svg g[data-iladi]").forEach(g => {
-    const id = g.id;
-    const name = g.dataset.iladi;
-
-    if (!ecologyData[id]) return;
-
-    const opt = document.createElement("option");
-    opt.value = id;
-    opt.textContent = name;
-    select.appendChild(opt);
-  });
-}
-
-/* HARİTA ÜZERİNE İSİM */
+/* İL İSİMLERİ */
 function addLabels() {
   const svg = mapContainer.querySelector("svg");
 
-  document.querySelectorAll("svg g[data-iladi]").forEach(g => {
-    const id = g.id;
-    if (!ecologyData[id]) return;
+  Object.keys(ecologyData).forEach(id => {
+    const region = svg.querySelector(`g#${id}`);
+    if (!region) return;
 
-    const box = g.getBBox();
-    if (box.width < 30 || box.height < 30) return;
+    const box = region.getBBox();
 
     const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
-    text.textContent = g.dataset.iladi;
+    text.textContent = ecologyData[id].city;
     text.setAttribute("x", box.x + box.width / 2);
     text.setAttribute("y", box.y + box.height / 2);
-    text.setAttribute("class", "map-label");
     text.setAttribute("text-anchor", "middle");
-    text.setAttribute("pointer-events", "none");
+    text.setAttribute("class", "map-label");
 
     svg.appendChild(text);
   });
 }
 
-/* TIKLAMA */
-function bindMapClicks() {
-  document.querySelectorAll("svg g[data-iladi]").forEach(g => {
+/* HARİTA TIKLAMA */
+function bindMap() {
+  const svg = mapContainer.querySelector("svg");
+
+  svg.querySelectorAll("g[id]").forEach(g => {
     g.style.cursor = "pointer";
     g.addEventListener("click", () => handleSelect(g.id));
   });
@@ -83,43 +70,39 @@ select.addEventListener("change", e => {
   if (e.target.value) handleSelect(e.target.value);
 });
 
-/* ORTAK */
+/* ORTAK SEÇİM */
 function handleSelect(id) {
   if (!ecologyData[id]) return;
 
-  zoomTo(id);
+  select.value = id;
+  highlight(id);
   showList(id);
   showModal(id);
 }
 
-/* ZOOM */
-function zoomTo(id) {
-  const svg = mapContainer.querySelector("svg");
-  const el = document.getElementById(id);
-  const box = el.getBBox();
-  const pad = 30;
-
-  svg.setAttribute(
-    "viewBox",
-    `${box.x - pad} ${box.y - pad} ${box.width + pad*2} ${box.height + pad*2}`
+/* AKTİF İL */
+function highlight(id) {
+  document.querySelectorAll("svg g").forEach(g =>
+    g.classList.remove("active")
   );
+  const el = document.querySelector(`svg g#${id}`);
+  if (el) el.classList.add("active");
 }
 
 /* LİSTE */
 function showList(id) {
   const d = ecologyData[id];
-  let html = `<h3>${d.city}</h3>`;
 
-  d.actions.forEach(a => {
-    html += `
+  list.innerHTML = `
+    <h3>${d.city}</h3>
+    ${d.actions.map(a => `
       <div class="action">
         <strong>${a.title}</strong>
         <small>${a.years}</small>
         <p>${a.desc}</p>
-      </div>`;
-  });
-
-  list.innerHTML = html;
+      </div>
+    `).join("")}
+  `;
 }
 
 /* MODAL */
