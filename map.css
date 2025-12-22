@@ -17,16 +17,19 @@ body {
   display: flex;
   gap: 15px;
 }
-
 #map-container {
-  flex: 1;
-  border: 1px solid #ddd;
+  width: 100%;
+  max-width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
 }
 
 #map-container svg {
   width: 100%;
-  height: auto;
+  height: 70vh;  
+  min-height: 420px;
 }
+
 
 #list {
   flex: 1;
