@@ -1,17 +1,23 @@
+
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <title>Türkiye Ekoloji Haritası</title>
-  <style>
-    body { margin:0; font-family: Arial, sans-serif; }
-    #mapWrapper svg { width: 100%; height: auto; cursor: pointer; }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ekolojik Direniş Haritası</title>
+
+  <link rel="stylesheet" href="map.css">
 </head>
 <body>
 
-<div id="mapWrapper"></div>
+<div id="app">
 
+  <select id="citySelect">
+    <option value="">İl seç</option>
+  </select>
+
+  <div id="layout">
+    <div id="map-container">
 <script>
 fetch("country.svg")
   .then(r => r.text())
@@ -28,6 +34,29 @@ function initMap() {
   });
 }
 </script>
+    </div>
 
+    <div id="list">
+      <p>Bir il seçin</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- MODAL -->
+<div id="modal" class="hidden">
+  <div class="modal-content">
+    <span id="closeModal">×</span>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<script src="map.js"></script>
 </body>
 </html>
+
+
+
+
+
+
