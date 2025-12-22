@@ -69,6 +69,11 @@ body {
   border-color: #2f6f55;
   box-shadow: 0 0 0 3px rgba(47,111,85,0.15);
 }
+#controls {
+  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+}
 
 /* MODAL */
 #modal {
