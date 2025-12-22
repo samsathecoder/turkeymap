@@ -1,89 +1,142 @@
+/* =====================
+   GENEL
+===================== */
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
+  font-family: "Open Sans", system-ui, sans-serif;
+  background: #f6f8f7;
+  color: #1f2933;
 }
 
+/* =====================
+   APP LAYOUT
+===================== */
 #app {
-  padding: 10px;
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
 }
 
-#citySelect {
-  width: 100%;
-  padding: 8px;
-  margin-bottom: 10px;
-}
-
-#layout {
-  display: block;
-  gap: 15px;
-}
+/* =====================
+   HARİTA
+===================== */
 #map-container {
   width: 100%;
   max-width: 100%;
-  border-radius: 12px;
-  overflow: hidden;
+  margin: 0 auto 24px;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,.08);
 }
 
 #map-container svg {
   width: 100%;
-  height: 70vh;  
-  min-height: 420px;
+  height: auto;
+  display: block;
 }
 
+/* İl alanları */
+svg g path {
+  fill: #cfe6df;
+  stroke: #ffffff;
+  stroke-width: 1;
+  transition: fill .2s ease, transform .2s ease;
+}
 
+/* Hover */
+svg g:hover path {
+  fill: #4fb6a0;
+}
+
+/* Seçili il (JS isterse class ekleriz) */
+svg g.active path {
+  fill: #1f9d85;
+}
+
+/* =====================
+   İL İSİMLERİ
+===================== */
+.map-label {
+  font-size: 10px;
+  fill: #1f2933;
+  font-weight: 600;
+  user-select: none;
+  pointer-events: none;
+  opacity: .85;
+}
+
+/* Küçük illerde gizle */
+@media (max-width: 768px) {
+  .map-label {
+    font-size: 9px;
+  }
+}
+
+/* =====================
+   KONTROLLER
+===================== */
+#controls {
+  margin-bottom: 20px;
+}
+
+#citySelect {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 14px;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+  background: #fff;
+  cursor: pointer;
+}
+
+/* =====================
+   LİSTE
+===================== */
 #list {
-  flex: 1;
-  max-height: 500px;
-  overflow-y: auto;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,.06);
+}
+
+#list h3 {
+  margin-top: 0;
 }
 
 .action {
-  border-bottom: 1px solid #ddd;
-  padding: 8px 0;
+  padding: 12px 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.action:last-child {
+  border-bottom: none;
 }
 
 .action strong {
   display: block;
 }
 
-.map-label {
-  font-size: 11px;
-  fill: #1f2d2a;
-  font-weight: 600;
-  pointer-events: none;
-}
-#citySelect {
-  appearance: none;
-  background: #f4f7f6;
-  border: 1px solid #d0d7d4;
-  border-radius: 12px;
-  padding: 14px 16px;
-  font-size: 16px;
-  font-weight: 500;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+.action small {
+  color: #6b7280;
+  font-size: 12px;
 }
 
-#citySelect:focus {
-  outline: none;
-  border-color: #2f6f55;
-  box-shadow: 0 0 0 3px rgba(47,111,85,0.15);
-}
-#controls {
-  margin: 20px 0;
-  display: flex;
-  justify-content: center;
-}
-
-/* MODAL */
+/* =====================
+   MODAL
+===================== */
 #modal {
   position: fixed;
   inset: 0;
-  z-index: 9999; 
-  background: rgba(0,0,0,0.6);
+  background: rgba(0,0,0,.55);
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 9999;
 }
 
 #modal.hidden {
@@ -92,53 +145,75 @@ body {
 
 .modal-content {
   background: #ffffff;
-  padding: 20px;
-  border-radius: 14px;
+  padding: 24px;
+  border-radius: 16px;
+  width: 90%;
   max-width: 420px;
-  width: 92%;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+  position: relative;
+  animation: fadeIn .2s ease;
 }
 
 #closeModal {
-  float: right;
+  position: absolute;
+  top: 14px;
+  right: 16px;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 22px;
+  opacity: .6;
 }
-path {
-  fill: #8faec4;
-  stroke: #ffffff;
-  stroke-width: 1;
+
+#closeModal:hover {
+  opacity: 1;
+}
+.il-isimleri div {
+  font-family: 'Open Sans';
+ 
+  background: #222;
+  color: #fff;
+  padding: 8px 16px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+
+#svg-turkiye-haritasi path {
   cursor: pointer;
-  transition: all 0.3s ease;
+}
+#svg-turkiye-haritasi path:hover {
+  fill: #666;
+}
+#bolge-1 g path{
+  fill:#87cdde
+}
+#bolge-2 g path{
+  fill:#ac93a7
+}
+#bolge-3 g path{
+  fill:#ffb380
+}
+#bolge-4 g path{
+  fill:#cccccc
+}
+#bolge-5 g path{
+  fill:#decd87
+}
+#bolge-6 g path{
+  fill:#de8787
+}
+#bolge-7 g path{
+  fill:#aade87
 }
 
-path:hover {
-  fill: #4f8b6f;
-}
-
-path.active {
-  fill: #2f6f55;
-}
-.sm_label {
-  display: block !important;
-  opacity: 1 !important;
-  fill: #1f2d2a !important;
-  font-size: 11px !important;
-  font-weight: 600 !important;
-  pointer-events: none;
-}
-path.active {
-  fill: #2f6f55 !important;
-}
-
-path.active + .sm_label,
-.sm_label.active {
-  fill: #ffffff !important;
-  font-size: 12px !important;
-}
-/* MOBİL */
-@media (max-width: 768px) {
-  #layout {
-    flex-direction: column;
+/* =====================
+   ANİMASYON
+===================== */
+@keyframes fadeIn {
+  from {
+    transform: scale(.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
   }
 }
