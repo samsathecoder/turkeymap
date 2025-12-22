@@ -11,6 +11,15 @@
   position: absolute;
   z-index: 2;
 }
+.sm_label {
+  display: block !important;
+  opacity: 1 !important;
+  pointer-events: none;
+  font-size: 12px;
+  fill: #ffffff;
+  font-weight: 600;
+  text-shadow: 0 0 3px rgba(0,0,0,0.6);
+}
 .il-isimleri div {
   font-family: 'Open Sans';
  
