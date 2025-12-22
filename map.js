@@ -42,13 +42,19 @@ function addLabels() {
     const region = svg.querySelector(`g#${id}`);
     if (!region) return;
 
-    const box = region.getBBox();
+    const path = region.querySelector("path");
+    if (!path) return;
+
+    const box = path.getBBox();
+    if (box.width < 15 || box.height < 15) return;
 
     const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
     text.textContent = ecologyData[id].city;
+
     text.setAttribute("x", box.x + box.width / 2);
     text.setAttribute("y", box.y + box.height / 2);
     text.setAttribute("text-anchor", "middle");
+    text.setAttribute("dominant-baseline", "middle");
     text.setAttribute("class", "map-label");
 
     svg.appendChild(text);
@@ -107,10 +113,34 @@ function showList(id) {
 
 /* MODAL */
 function showModal(id) {
+  const region = document.querySelector(`svg g#${id}`);
+  if (!region) return;
+
+  const path = region.querySelector("path");
+  const box = path.getBBox();
+
+  const svg = mapContainer.querySelector("svg");
+  const pt = svg.createSVGPoint();
+  pt.x = box.x + box.width / 2;
+  pt.y = box.y;
+
+  const screenPoint = pt.matrixTransform(svg.getScreenCTM());
+
+  modal.style.left = `${screenPoint.x - 130}px`;
+  modal.style.top = `${screenPoint.y - 20}px`;
+
   modalBody.innerHTML = `
-    <h3>${ecologyData[id].city}</h3>
-    <p>${ecologyData[id].actions.length} ekolojik mücadele</p>
+    <h4>${ecologyData[id].city}</h4>
+    <ul>
+      ${ecologyData[id].actions.map(a => `
+        <li>
+          <strong>${a.title}</strong><br>
+          <small>${a.years}</small>
+        </li>
+      `).join("")}
+    </ul>
   `;
+
   modal.classList.remove("hidden");
 }
 
