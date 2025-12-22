@@ -1,13 +1,30 @@
 /* =====================
+   RESET + WRAPPER
+===================== */
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+#app {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 16px;
+  box-sizing: border-box;
+  font-family: "Open Sans", system-ui, sans-serif;
+}
+
+/* =====================
    HARİTA
 ===================== */
 #map-container {
   width: 100%;
-  margin: 0 auto 24px;
   background: #ffffff;
   border-radius: 16px;
   padding: 16px;
   box-shadow: 0 10px 25px rgba(0,0,0,.08);
+  overflow: hidden; /* SVG + label taşmasın */
 }
 
 #map-container svg {
@@ -16,14 +33,15 @@
   display: block;
 }
 
-/* SADECE stroke veriyoruz – fill YOK */
+/* İl alanları – fill SVG’den gelsin */
 svg g path {
   stroke: #ffffff;
   stroke-width: 1;
   transition: filter .2s ease, stroke-width .2s ease;
+  cursor: pointer;
 }
 
-/* Hover – rengi bozmadan */
+/* Hover */
 svg g:hover path {
   filter: brightness(0.85);
 }
@@ -37,6 +55,7 @@ svg g.active path {
 
 /* =====================
    BÖLGE RENKLERİ
+   (SVG yapısına bağlı)
 ===================== */
 #bolge-1 g path { fill: #87cdde; }
 #bolge-2 g path { fill: #ac93a7; }
@@ -47,7 +66,7 @@ svg g.active path {
 #bolge-7 g path { fill: #aade87; }
 
 /* =====================
-   İL İSİMLERİ
+   İL İSİMLERİ (LABEL)
 ===================== */
 .map-label {
   font-size: 10px;
@@ -55,14 +74,88 @@ svg g.active path {
   font-weight: 600;
   pointer-events: none;
   opacity: .85;
+  text-anchor: middle;
+  dominant-baseline: middle;
 }
 
 /* =====================
-   MODAL
+   DROPDOWN
+===================== */
+#controls {
+  margin: 20px auto;
+  display: flex;
+  justify-content: center;
+}
+
+#citySelect {
+  width: 280px;
+  max-width: 90%;
+  padding: 12px 16px;
+  font-size: 14px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  color: #111827;
+  cursor: pointer;
+
+  box-shadow:
+    0 1px 2px rgba(0,0,0,.05),
+    0 4px 12px rgba(0,0,0,.06);
+
+  transition: border .2s ease, box-shadow .2s ease;
+}
+
+#citySelect:hover {
+  border-color: #9ca3af;
+}
+
+#citySelect:focus {
+  outline: none;
+  border-color: #1f9d85;
+  box-shadow: 0 0 0 3px rgba(31,157,133,.2);
+}
+
+/* =====================
+   LİSTE
+===================== */
+#list {
+  margin-top: 24px;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,.06);
+}
+
+#list h3 {
+  margin: 0 0 12px;
+  font-size: 18px;
+}
+
+.action {
+  padding: 12px 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.action:last-child {
+  border-bottom: none;
+}
+
+.action strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.action small {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/* =====================
+   MODAL (HARİTA ÜSTÜ)
 ===================== */
 #modal {
   position: absolute;
-  background: white;
+  background: #ffffff;
   padding: 14px;
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0,0,0,.2);
@@ -70,25 +163,36 @@ svg g.active path {
   width: 260px;
 }
 
-
-
 #modal.hidden {
   display: none;
 }
 
-.modal-content {
-  background: #ffffff;
-  padding: 24px;
-  border-radius: 16px;
-  width: 90%;
-  max-width: 420px;
-  position: relative;
-}
-
 #closeModal {
   position: absolute;
-  top: 14px;
-  right: 16px;
+  top: 10px;
+  right: 12px;
   cursor: pointer;
-  font-size: 22px;
+  font-size: 20px;
+  opacity: .6;
+}
+
+#closeModal:hover {
+  opacity: 1;
+}
+
+/* =====================
+   MOBİL
+===================== */
+@media (max-width: 600px) {
+  #app {
+    padding: 12px;
+  }
+
+  #citySelect {
+    width: 100%;
+  }
+
+  .map-label {
+    font-size: 9px;
+  }
 }
