@@ -92,6 +92,14 @@ path:hover {
 path.active {
   fill: #2f6f55;
 }
+.sm_label {
+  display: block !important;
+  opacity: 1 !important;
+  fill: #1f2d2a !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  pointer-events: none;
+}
 /* MOBİL */
 @media (max-width: 768px) {
   #layout {
