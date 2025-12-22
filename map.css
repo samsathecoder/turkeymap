@@ -44,10 +44,10 @@ body {
 }
 
 .map-label {
-  font-size: 10px;
-  fill: #fff;
+  font-size: 11px;
+  fill: #1f2d2a;
+  font-weight: 600;
   pointer-events: none;
-  vector-effect: non-scaling-stroke;
 }
 
 /* MODAL */
@@ -77,7 +77,21 @@ body {
   cursor: pointer;
   font-size: 18px;
 }
+path {
+  fill: #8faec4;
+  stroke: #ffffff;
+  stroke-width: 1;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
 
+path:hover {
+  fill: #4f8b6f;
+}
+
+path.active {
+  fill: #2f6f55;
+}
 /* MOBİL */
 @media (max-width: 768px) {
   #layout {
