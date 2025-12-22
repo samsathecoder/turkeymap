@@ -1,0 +1,86 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+#app {
+  padding: 10px;
+}
+
+#citySelect {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+}
+
+#layout {
+  display: flex;
+  gap: 15px;
+}
+
+#map-container {
+  flex: 1;
+  border: 1px solid #ddd;
+}
+
+#map-container svg {
+  width: 100%;
+  height: auto;
+}
+
+#list {
+  flex: 1;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.action {
+  border-bottom: 1px solid #ddd;
+  padding: 8px 0;
+}
+
+.action strong {
+  display: block;
+}
+
+.map-label {
+  font-size: 10px;
+  fill: #fff;
+  pointer-events: none;
+  vector-effect: non-scaling-stroke;
+}
+
+/* MODAL */
+#modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#modal.hidden {
+  display: none;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 15px;
+  max-width: 400px;
+  width: 90%;
+  border-radius: 6px;
+}
+
+#closeModal {
+  float: right;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+/* MOBİL */
+@media (max-width: 768px) {
+  #layout {
+    flex-direction: column;
+  }
+}
