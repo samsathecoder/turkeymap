@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Türkiye Ekoloji Haritası</title>
+  <style>
+    body { margin:0; font-family: Arial, sans-serif; }
+    #mapWrapper svg { width: 100%; height: auto; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+<div id="mapWrapper"></div>
+
+<script>
+fetch("country.svg")
+  .then(r => r.text())
+  .then(svg => {
+    document.getElementById("mapWrapper").innerHTML = svg;
+    initMap();
+  });
+
+function initMap() {
+  document.querySelectorAll("svg path").forEach(p => {
+    p.addEventListener("click", () => {
+      alert("Bir il tıklandı");
+    });
+  });
+}
+</script>
+
+</body>
+</html>
