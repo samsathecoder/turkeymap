@@ -1,32 +1,8 @@
 /* =====================
-   GENEL
-===================== */
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  font-family: "Open Sans", system-ui, sans-serif;
-  background: #f6f8f7;
-  color: #1f2933;
-}
-
-/* =====================
-   APP LAYOUT
-===================== */
-#app {
-  max-width: 1200px;
-  margin: auto;
-  padding: 20px;
-}
-
-/* =====================
    HARİTA
 ===================== */
 #map-container {
   width: 100%;
-  max-width: 100%;
   margin: 0 auto 24px;
   background: #ffffff;
   border-radius: 16px;
@@ -40,23 +16,35 @@ body {
   display: block;
 }
 
-/* İl alanları */
+/* SADECE stroke veriyoruz – fill YOK */
 svg g path {
-  fill: #cfe6df;
   stroke: #ffffff;
   stroke-width: 1;
-  transition: fill .2s ease, transform .2s ease;
+  transition: filter .2s ease, stroke-width .2s ease;
 }
 
-/* Hover */
+/* Hover – rengi bozmadan */
 svg g:hover path {
-  fill: #4fb6a0;
+  filter: brightness(0.85);
 }
 
-/* Seçili il (JS isterse class ekleriz) */
+/* Seçili il */
 svg g.active path {
-  fill: #1f9d85;
+  stroke: #111;
+  stroke-width: 2;
+  filter: brightness(0.8);
 }
+
+/* =====================
+   BÖLGE RENKLERİ
+===================== */
+#bolge-1 g path { fill: #87cdde; }
+#bolge-2 g path { fill: #ac93a7; }
+#bolge-3 g path { fill: #ffb380; }
+#bolge-4 g path { fill: #cccccc; }
+#bolge-5 g path { fill: #decd87; }
+#bolge-6 g path { fill: #de8787; }
+#bolge-7 g path { fill: #aade87; }
 
 /* =====================
    İL İSİMLERİ
@@ -65,65 +53,8 @@ svg g.active path {
   font-size: 10px;
   fill: #1f2933;
   font-weight: 600;
-  user-select: none;
   pointer-events: none;
   opacity: .85;
-}
-
-/* Küçük illerde gizle */
-@media (max-width: 768px) {
-  .map-label {
-    font-size: 9px;
-  }
-}
-
-/* =====================
-   KONTROLLER
-===================== */
-#controls {
-  margin-bottom: 20px;
-}
-
-#citySelect {
-  width: 100%;
-  padding: 12px 14px;
-  font-size: 14px;
-  border-radius: 10px;
-  border: 1px solid #d1d5db;
-  background: #fff;
-  cursor: pointer;
-}
-
-/* =====================
-   LİSTE
-===================== */
-#list {
-  background: #ffffff;
-  border-radius: 16px;
-  padding: 20px;
-  box-shadow: 0 10px 25px rgba(0,0,0,.06);
-}
-
-#list h3 {
-  margin-top: 0;
-}
-
-.action {
-  padding: 12px 0;
-  border-bottom: 1px solid #e5e7eb;
-}
-
-.action:last-child {
-  border-bottom: none;
-}
-
-.action strong {
-  display: block;
-}
-
-.action small {
-  color: #6b7280;
-  font-size: 12px;
 }
 
 /* =====================
@@ -150,7 +81,6 @@ svg g.active path {
   width: 90%;
   max-width: 420px;
   position: relative;
-  animation: fadeIn .2s ease;
 }
 
 #closeModal {
@@ -159,61 +89,4 @@ svg g.active path {
   right: 16px;
   cursor: pointer;
   font-size: 22px;
-  opacity: .6;
-}
-
-#closeModal:hover {
-  opacity: 1;
-}
-.il-isimleri div {
-  font-family: 'Open Sans';
- 
-  background: #222;
-  color: #fff;
-  padding: 8px 16px;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  border-radius: 4px;
-}
-
-#svg-turkiye-haritasi path {
-  cursor: pointer;
-}
-#svg-turkiye-haritasi path:hover {
-  fill: #666;
-}
-#bolge-1 g path{
-  fill:#87cdde
-}
-#bolge-2 g path{
-  fill:#ac93a7
-}
-#bolge-3 g path{
-  fill:#ffb380
-}
-#bolge-4 g path{
-  fill:#cccccc
-}
-#bolge-5 g path{
-  fill:#decd87
-}
-#bolge-6 g path{
-  fill:#de8787
-}
-#bolge-7 g path{
-  fill:#aade87
-}
-
-/* =====================
-   ANİMASYON
-===================== */
-@keyframes fadeIn {
-  from {
-    transform: scale(.95);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
 }
