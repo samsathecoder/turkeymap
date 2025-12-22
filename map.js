@@ -108,11 +108,17 @@ function showList(id) {
 /* MODAL */
 const modal = document.getElementById("modal");
 const modalBody = document.getElementById("modalBody");
-
 function showModal(id) {
-  modalBody.innerHTML = `<h3>${ecologyData[id].city}</h3>`;
+  if (!ecologyData[id]) return;
+
+  modalBody.innerHTML = `
+    <h3>${ecologyData[id].city}</h3>
+    <p><strong>${ecologyData[id].actions.length}</strong> ekolojik mücadele</p>
+  `;
+
   modal.classList.remove("hidden");
 }
+
 
 document.getElementById("closeModal").onclick = () => {
   modal.classList.add("hidden");
