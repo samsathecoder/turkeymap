@@ -1,46 +1,28 @@
-
 <!DOCTYPE html>
 <html lang="tr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Ekolojik Direniş Haritası</title>
-
   <link rel="stylesheet" href="map.css">
 </head>
 <body>
 
 <div id="app">
 
-<div id="controls">
-  <select id="citySelect">
-    <option value="">Bir il seç</option>
-  </select>
-</div>
+  <!-- HARİTA -->
+  <div id="map-container"></div>
 
-  <div id="layout">
-    <div id="map-container">
-<script>
-fetch("country.svg")
-  .then(r => r.text())
-  .then(svg => {
-    document.getElementById("mapWrapper").innerHTML = svg;
-    initMap();
-  });
+  <!-- KONTROLLER -->
+  <div id="controls">
+    <select id="citySelect">
+      <option value="">İl seçiniz</option>
+    </select>
+  </div>
 
-function initMap() {
-  document.querySelectorAll("svg path").forEach(p => {
-    p.addEventListener("click", () => {
-      alert("Bir il tıklandı");
-    });
-  });
-}
-</script>
-    </div>
-
-    <div id="list">
-      <p>Bir il seçin</p>
-    </div>
+  <!-- LİSTE -->
+  <div id="list">
+   
   </div>
 
 </div>
@@ -56,9 +38,3 @@ function initMap() {
 <script src="map.js"></script>
 </body>
 </html>
-
-
-
-
-
-
