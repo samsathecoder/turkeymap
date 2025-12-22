@@ -1,6 +1,9 @@
 const mapContainer = document.getElementById("map-container");
 const select = document.getElementById("citySelect");
 const list = document.getElementById("list");
+const modal = document.getElementById("modal");
+const modalBody = document.getElementById("modalBody");
+const closeModal = document.getElementById("closeModal");
 
 let ecologyData = {};
 let originalViewBox = "";
@@ -17,7 +20,7 @@ fetch("country.svg")
     bindMapClicks();
   });
 
-/* JSON YÜKLE */
+/* JSON */
 function loadData() {
   fetch("ecology.json")
     .then(r => r.json())
@@ -25,6 +28,8 @@ function loadData() {
       ecologyData = data;
 
       Object.keys(ecologyData).forEach(id => {
+        if (!document.getElementById(id)) return;
+
         const opt = document.createElement("option");
         opt.value = id;
         opt.textContent = ecologyData[id].city;
@@ -35,7 +40,7 @@ function loadData() {
     });
 }
 
-/* LABEL EKLE */
+/* LABEL */
 function addLabels() {
   const svg = mapContainer.querySelector("svg");
 
@@ -44,56 +49,60 @@ function addLabels() {
     if (!region) return;
 
     const box = region.getBBox();
-    const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    if (box.width < 25 || box.height < 25) return;
 
+    const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
     text.textContent = ecologyData[id].city;
     text.setAttribute("x", box.x + box.width / 2);
     text.setAttribute("y", box.y + box.height / 2);
-    text.setAttribute("text-anchor", "middle");
-    text.setAttribute("dominant-baseline", "middle");
     text.setAttribute("class", "map-label");
 
     svg.appendChild(text);
   });
 }
 
-/* MAP TIKLAMA */
+/* HARİTA TIK */
 function bindMapClicks() {
-  document.querySelectorAll("path").forEach(p => {
-    p.addEventListener("click", () => {
-      const id = p.id;
-      if (ecologyData[id]) {
-        select.value = id;
-        zoomTo(id);
-        showList(id);
-        showModal(id);
-      }
-    });
+  document.querySelectorAll("svg path").forEach(p => {
+    p.addEventListener("click", () => handleSelect(p.id));
   });
 }
 
 /* DROPDOWN */
 select.addEventListener("change", e => {
-  const id = e.target.value;
-  if (!id) return;
+  if (e.target.value) handleSelect(e.target.value);
+});
+
+/* ORTAK */
+function handleSelect(id) {
+  if (!ecologyData[id]) return;
+  select.value = id;
   zoomTo(id);
   showList(id);
-});
+  showModal(id);
+}
 
 /* ZOOM */
 function zoomTo(id) {
   const svg = mapContainer.querySelector("svg");
   const el = document.getElementById(id);
+  if (!el) return;
+
   const box = el.getBBox();
-  svg.setAttribute("viewBox", `${box.x} ${box.y} ${box.width} ${box.height}`);
+  const pad = 30;
+
+  svg.setAttribute(
+    "viewBox",
+    `${box.x - pad} ${box.y - pad} ${box.width + pad*2} ${box.height + pad*2}`
+  );
 }
 
 /* LİSTE */
 function showList(id) {
-  const data = ecologyData[id];
-  let html = `<h3>${data.city}</h3>`;
+  const d = ecologyData[id];
+  let html = `<h3>${d.city}</h3>`;
 
-  data.actions.forEach(a => {
+  d.actions.forEach(a => {
     html += `
       <div class="action">
         <strong>${a.title}</strong>
@@ -106,20 +115,12 @@ function showList(id) {
 }
 
 /* MODAL */
-const modal = document.getElementById("modal");
-const modalBody = document.getElementById("modalBody");
 function showModal(id) {
-  if (!ecologyData[id]) return;
-
   modalBody.innerHTML = `
     <h3>${ecologyData[id].city}</h3>
-    <p><strong>${ecologyData[id].actions.length}</strong> ekolojik mücadele</p>
+    <p>${ecologyData[id].actions.length} ekolojik mücadele</p>
   `;
-
   modal.classList.remove("hidden");
 }
 
-
-document.getElementById("closeModal").onclick = () => {
-  modal.classList.add("hidden");
-};
+closeModal.onclick = () => modal.classList.add("hidden");
