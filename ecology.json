@@ -1,5 +1,5 @@
 {
-  "TR62": {
+  "Tunceli": {
     "city": "Tunceli",
     "actions": [
       {
@@ -15,8 +15,9 @@
     ]
   },
 
-  "TR34": {
+  "istanbul": {
     "city": "İstanbul",
+
     "actions": [
       {
         "title": "Kuzey Ormanları",
