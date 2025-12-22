@@ -1,0 +1,28 @@
+{
+  "TR62": {
+    "city": "Tunceli",
+    "actions": [
+      {
+        "title": "Munzur Barajları",
+        "years": "2009–2016",
+        "desc": "Munzur Vadisi'nde baraj projelerine karşı mücadele."
+      },
+      {
+        "title": "Altın Madeni",
+        "years": "2021–",
+        "desc": "Madencilik faaliyetlerine karşı direniş."
+      }
+    ]
+  },
+
+  "TR34": {
+    "city": "İstanbul",
+    "actions": [
+      {
+        "title": "Kuzey Ormanları",
+        "years": "2014–",
+        "desc": "3. Köprü ve havaalanına karşı ekoloji mücadelesi."
+      }
+    ]
+  }
+}
