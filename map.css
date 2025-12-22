@@ -100,6 +100,15 @@ path.active {
   font-weight: 600 !important;
   pointer-events: none;
 }
+path.active {
+  fill: #2f6f55 !important;
+}
+
+path.active + .sm_label,
+.sm_label.active {
+  fill: #ffffff !important;
+  font-size: 12px !important;
+}
 /* MOBİL */
 @media (max-width: 768px) {
   #layout {
