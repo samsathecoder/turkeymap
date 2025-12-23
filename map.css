@@ -14,7 +14,14 @@ html, body {
   box-sizing: border-box;
   font-family: "Open Sans", system-ui, sans-serif;
 }
-
+#map-wrapper {
+    min-height: 600px;
+  width: 100%;
+  background: #f6f8f7;
+  border-radius: 20px;
+  padding: 20px;
+  box-sizing: border-box;
+}
 /* =====================
    HARİTA
 ===================== */
@@ -82,6 +89,7 @@ svg g.active path {
    DROPDOWN
 ===================== */
 #controls {
+     margin-top: 16px;
   margin: 20px auto;
   display: flex;
   justify-content: center;
